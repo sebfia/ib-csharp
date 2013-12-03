@@ -54,6 +54,10 @@ namespace Krs.Ats.IBNet
         /// </summary>
         [Description("BILL")] Bill,
         /// <summary>
+        /// CFD
+        /// </summary>
+        [Description("CFD")] CFD,
+        /// <summary>
         /// Undefined Security Type
         /// </summary>
         [Description("")] Undefined

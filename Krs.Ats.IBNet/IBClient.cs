@@ -4614,6 +4614,22 @@ namespace Krs.Ats.IBNet
                             contract.LiquidHours = ReadStr();
                         }
 
+                        if (version >= 8)
+                        {
+                            contract.EVRule = ReadStr();
+                            contract.EVMultiplier = ReadDouble();
+                        }
+                        if (version >= 7)
+                        {
+                            var securityIDCount = ReadInt();
+                            if (securityIDCount > 0)
+                            {
+                                var tag = ReadStr();
+                                var val = ReadStr();
+                                contract.SecurityIDs.Add(tag, val);
+                            }
+                        }
+
                         contractDetails(reqId, contract);
                         break;
                     }

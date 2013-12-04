@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Krs.Ats.IBNet
 {
@@ -94,6 +95,8 @@ namespace Krs.Ats.IBNet
             this.timeZoneId = timeZoneId;
             this.tradingHours = tradingHours;
             this.liquidHours = liquidHours;
+
+            SecurityIDs = new Dictionary<string, string>();
         }
 
         #endregion
@@ -389,6 +392,24 @@ namespace Krs.Ats.IBNet
             get { return liquidHours; }
             set { liquidHours = value; }
         }
+
+        /// <summary>
+        ///  This string attribute contains the Economic Value Rule name and the respective optional argument. 
+        /// The two values should be separated by a colon. For example, aussieBond:YearsToExpiration=3. 
+        /// When the optional argument is not present, the first value will be followed by a colon.
+        /// </summary>
+        public string EVRule { get; set; }
+
+        /// <summary>
+        /// This double attribute tells you approximately how much the market value of a contract would change if the price were to change by 1. 
+        /// It cannot be used to get market value by multiplying the price by the approximate multiplier.
+        /// </summary>
+        public double EVMultiplier { get; set; }
+
+        /// <summary>
+        /// A list of contract identifiers that the customer is allowed to view (CUSIP, ISIN, etc.)
+        /// </summary>
+        public Dictionary<string, string> SecurityIDs { get; set; }
 
         #endregion
     }

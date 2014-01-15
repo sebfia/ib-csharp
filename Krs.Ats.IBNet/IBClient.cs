@@ -14,7 +14,7 @@ namespace Krs.Ats.IBNet
     /// Interactive Brokers Client
     /// Handles all communications to and from the TWS.
     /// </summary>
-    public class IBClient : IDisposable
+    public class IBClient : IDisposable, IIBClient
     {
         #region Tracer
         private GeneralTracer ibTrace = new GeneralTracer("ibInfo", "Interactive Brokers Parameter Info");

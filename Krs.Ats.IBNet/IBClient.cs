@@ -14,7 +14,7 @@ namespace Krs.Ats.IBNet
     /// Interactive Brokers Client
     /// Handles all communications to and from the TWS.
     /// </summary>
-    public class IBClient : IDisposable
+    public class IBClient : IDisposable, IIBClient
     {
         #region Tracer
         private GeneralTracer ibTrace = new GeneralTracer("ibInfo", "Interactive Brokers Parameter Info");
@@ -4612,6 +4612,22 @@ namespace Krs.Ats.IBNet
                             contract.TimeZoneId = ReadStr();
                             contract.TradingHours = ReadStr();
                             contract.LiquidHours = ReadStr();
+                        }
+
+                        if (version >= 8)
+                        {
+                            contract.EVRule = ReadStr();
+                            contract.EVMultiplier = ReadDouble();
+                        }
+                        if (version >= 7)
+                        {
+                            var securityIDCount = ReadInt();
+                            if (securityIDCount > 0)
+                            {
+                                var tag = ReadStr();
+                                var val = ReadStr();
+                                contract.SecurityIDs.Add(tag, val);
+                            }
                         }
 
                         contractDetails(reqId, contract);

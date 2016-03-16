@@ -1744,7 +1744,7 @@ namespace Krs.Ats.IBNet
                     return;
                 }
 
-                int version = 4;
+                int version = 6;
 
                 try
                 {
@@ -1815,6 +1815,8 @@ namespace Krs.Ats.IBNet
                             }
                         }
                     }
+                    if (serverVersion >= 68)
+                        send(" ");
                 }
                 catch (Exception e)
                 {
@@ -1974,6 +1976,8 @@ namespace Krs.Ats.IBNet
                     send(barSize);
                     send(EnumDescConverter.GetEnumDescription(whatToShow));
                     send(useRth);
+                    if (serverVersion >= 68)
+                        send(" ");
                 }
                 catch (Exception e)
                 {

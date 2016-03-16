@@ -38,54 +38,69 @@ namespace Krs.Ats.TestApp
             client.RealTimeBar += client_RealTimeBar;
             client.OrderStatus += client_OrderStatus;
             client.ExecDetails += client_ExecDetails;
+            client.HistoricalData += client_HistoricalData;
 
             Console.WriteLine("Connecting to IB.");
-            client.Connect("127.0.0.1", 7496, 0);
-            TF = new Contract("TF", "NYBOT", SecurityType.Future, "USD", "200909");
-            YmEcbot = new Contract("YM", "ECBOT", SecurityType.Future, "USD", "200909");
-            ES = new Contract("ES", "GLOBEX", SecurityType.Future, "USD", "200909");
-            SPY = new Contract("SPY", "GLOBEX", SecurityType.Future, "USD", "200909");
-            ZN = new Contract("ZN", "ECBOT", SecurityType.Future, "USD", "200909");
-            ZB = new Contract("ZB", "ECBOT", SecurityType.Future, "USD", "200909");
-            ZT = new Contract("ZT", "ECBOT", SecurityType.Future, "USD", "200909");
-            ZF = new Contract("ZF", "ECBOT", SecurityType.Future, "USD", "200909");
+            client.Connect("127.0.0.1", 4002, 0);
+            //TF = new Contract("TF", "NYBOT", SecurityType.Future, "USD", "200909");
+            //YmEcbot = new Contract("YM", "ECBOT", SecurityType.Future, "USD", "200909");
+            //ES = new Contract("ES", "GLOBEX", SecurityType.Future, "USD", "200909");
+            //SPY = new Contract("SPY", "GLOBEX", SecurityType.Future, "USD", "200909");
+            //ZN = new Contract("ZN", "ECBOT", SecurityType.Future, "USD", "200909");
+            ZB = new Contract("ZB", "ECBOT", SecurityType.Future, "USD", "201609");
+            //ZT = new Contract("ZT", "ECBOT", SecurityType.Future, "USD", "200909");
+            //ZF = new Contract("ZF", "ECBOT", SecurityType.Future, "USD", "200909");
+            var dbk = new Contract();
+            dbk.ContractId = 14121;
+            dbk.Exchange = "IBIS";
+            //var dbk = new Contract("DBK", "IBIS", SecurityType.Stock, "EUR");
+            //client.RequestHistoricalData(1, dbk, DateTime.Today, "5 W", BarSize.OneDay, HistoricalDataType.Midpoint, 0);
+            //var eurusd = new Contract();
+            //eurusd.ContractId = 12087792;
+            //eurusd.Exchange = "IDEALPRO";
+            var eurusd = new Contract("EUR", "IDEALPRO", SecurityType.Cash, "USD");
+            client.RequestRealTimeBars(1, eurusd, 5, RealTimeBarType.Midpoint, true);
+            //TickNasdaq = new Contract("TICK-NASD", "NASDAQ", SecurityType.Index, "USD");
+            //VolNasdaq = new Contract("VOL-NASD", "NASDAQ", SecurityType.Index, "USD");
+            //AdNasdaq = new Contract("AD-NASD", "NASDAQ", SecurityType.Index, "USD");
 
-            TickNasdaq = new Contract("TICK-NASD", "NASDAQ", SecurityType.Index, "USD");
-            VolNasdaq = new Contract("VOL-NASD", "NASDAQ", SecurityType.Index, "USD");
-            AdNasdaq = new Contract("AD-NASD", "NASDAQ", SecurityType.Index, "USD");
 
-
-            TickNyse = new Contract("TICK-NYSE", "NYSE", SecurityType.Index, "USD");
-            VolNyse = new Contract("VOL-NYSE", "NYSE", SecurityType.Index, "USD");
-            AdNyse = new Contract("AD-NYSE", "NYSE", SecurityType.Index, "USD");
+            //TickNyse = new Contract("TICK-NYSE", "NYSE", SecurityType.Index, "USD");
+            //VolNyse = new Contract("VOL-NYSE", "NYSE", SecurityType.Index, "USD");
+            //AdNyse = new Contract("AD-NYSE", "NYSE", SecurityType.Index, "USD");
 
             //New Contract Creation Features
-            Equity Google = new Equity("GOOG");
+            //Equity Google = new Equity("GOOG");
 
             //Forex Test
-            Forex EUR = new Forex("EUR", "USD");
+            //Forex EUR = new Forex("EUR", "USD");
 
-            client.RequestMarketData(14, Google, null, false, false);
-            client.RequestMarketDepth(15, Google, 5);
-            client.RequestRealTimeBars(16, Google, 5, RealTimeBarType.Trades,false);
-            client.RequestMarketData(17, EUR, null, false, false);
+            //client.RequestMarketData(14, Google, null, false, false);
+            //client.RequestMarketDepth(15, Google, 5);
+            //client.RequestRealTimeBars(16, Google, 5, RealTimeBarType.Trades,false);
+            //client.RequestMarketData(17, EUR, null, false, false);
 
-            Order BuyContract = new Order();
-            BuyContract.Action = ActionSide.Buy;
-            BuyContract.OutsideRth = false;
-            BuyContract.LimitPrice = 560;
-            BuyContract.OrderType = OrderType.Limit;
-            BuyContract.TotalQuantity = 1;
-            //client.PlaceOrder(503, TF, BuyContract);
+            //Order BuyContract = new Order();
+            //BuyContract.Action = ActionSide.Buy;
+            //BuyContract.OutsideRth = false;
+            //BuyContract.LimitPrice = 560;
+            //BuyContract.OrderType = OrderType.Limit;
+            //BuyContract.TotalQuantity = 1;
+            ////client.PlaceOrder(503, TF, BuyContract);
 
-            client.RequestExecutions(34, new ExecutionFilter());
+            //client.RequestExecutions(34, new ExecutionFilter());
 
-            client.RequestAllOpenOrders();
+            //client.RequestAllOpenOrders();
 
             while(true)
             {
                 Thread.Sleep(100);
             }
+        }
+
+        private static void client_HistoricalData(object sender, HistoricalDataEventArgs e)
+        {
+            Console.WriteLine("HistoricalData");
         }
 
         static void client_ExecDetails(object sender, ExecDetailsEventArgs e)

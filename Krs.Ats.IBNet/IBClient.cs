@@ -1758,6 +1758,9 @@ namespace Krs.Ats.IBNet
                     send(version);
                     send(tickerId);
 
+                    if (serverVersion >= 68)
+                        send(contract.ContractId);
+
                     //Send Contract Fields
                     send(contract.Symbol);
                     send(EnumDescConverter.GetEnumDescription(contract.SecurityType));
@@ -1771,6 +1774,8 @@ namespace Krs.Ats.IBNet
                     send(contract.PrimaryExchange);
                     send(contract.Currency);
                     send(contract.LocalSymbol);
+                    if (serverVersion >= 68)
+                        send(contract.TradingClass);
                     if (serverVersion >= 31)
                     {
                         send(contract.IncludeExpired ? 1 : 0);
@@ -1941,7 +1946,7 @@ namespace Krs.Ats.IBNet
                     return;
                 }
 
-                int version = 1;
+                int version = 3;
 
                 try
                 {
@@ -1949,6 +1954,9 @@ namespace Krs.Ats.IBNet
                     send((int)OutgoingMessage.RequestRealTimeBars);
                     send(version);
                     send(tickerId);
+
+                    if (serverVersion >= 68)
+                        send(contract.ContractId);
 
                     //Send Contract Fields
                     send(contract.Symbol);
@@ -1961,6 +1969,8 @@ namespace Krs.Ats.IBNet
                     send(contract.PrimaryExchange);
                     send(contract.Currency);
                     send(contract.LocalSymbol);
+                    if (serverVersion >= 68)
+                        send(contract.TradingClass);
                     send(barSize);
                     send(EnumDescConverter.GetEnumDescription(whatToShow));
                     send(useRth);
@@ -4585,6 +4595,7 @@ namespace Krs.Ats.IBNet
                         contract.Summary.LocalSymbol = ReadStr();
                         contract.MarketName = ReadStr();
                         contract.TradingClass = ReadStr();
+                        contract.Summary.TradingClass = contract.TradingClass;
                         contract.Summary.ContractId = ReadInt();
                         contract.MinTick = ReadDouble();
                         contract.Summary.Multiplier = ReadStr();

@@ -26,6 +26,7 @@ namespace Krs.Ats.IBNet
         private String multiplier;
         private SecurityIdType secIdType;        // CUSIP;SEDOL;ISIN;RIC
         private String secId;
+        private String tradingClass;
 
         private String primaryExchange;
                        // pick a non-aggregate (ie not the SMART exchange) exchange that the contract trades on.  DO NOT SET TO SMART.
@@ -231,6 +232,16 @@ namespace Krs.Ats.IBNet
         {
             get { return localSymbol; }
             set { localSymbol = value; }
+        }
+
+        /**
+         * @brief The trading class name for this contract.
+         * Available in TWS contract description window as well. For example, GBL Dec '13 future's trading class is "FGBL"
+         */
+        public string TradingClass
+        {
+            get { return tradingClass; }
+            set { tradingClass = value; }
         }
 
         /// <summary>

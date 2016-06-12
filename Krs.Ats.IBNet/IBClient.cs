@@ -4860,7 +4860,7 @@ namespace Krs.Ats.IBNet
                             //Check if date time string or seconds
                             DateTime timeStamp;
                             if(longDate < 30000000)
-                                timeStamp = new DateTime(Int32.Parse(date.Substring(0, 4)), Int32.Parse(date.Substring(4, 2)), Int32.Parse(date.Substring(6, 2)), 0, 0, 0, DateTimeKind.Utc).ToLocalTime();
+                                timeStamp = new DateTime(Int32.Parse(date.Substring(0, 4)), Int32.Parse(date.Substring(4, 2)), Int32.Parse(date.Substring(6, 2)), 0, 0, 0);
                             else
                                 timeStamp = new DateTime(1970,1,1,0,0,0,DateTimeKind.Utc).AddSeconds(longDate).ToLocalTime();
                             decimal open = ReadDecimal();
